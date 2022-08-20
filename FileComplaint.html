@@ -2,7 +2,37 @@
 
 <html>
 <style>
-
+h1 {
+    border-style: dotted;
+    margin:auto;
+    text-align:center;
+    font-size: 55px;
+}
+h2 {
+    margin:auto;
+    text-align: center;
+    font-size: 40px;
+}
+form {
+    margin:auto;
+    text-align: center;
+    font-weight: bold;
+}
+input {
+    text-align: center;
+    background-color: rgb(172, 195, 238);
+}
+nav {
+    margin: auto;
+}
+button{
+    background-color: rgb(172, 195, 238);
+    font-size: 30px;
+    width: 50%;
+}
+body{
+    background-image: url("https://farrensblob.z5.web.core.windows.net/C_CWACOM_0XXXX078_REC_MENA_VIDSCREENSHOT.jpg");
+}
 
 </style>
 <head>
@@ -12,22 +42,24 @@
 
 </head>
 <body>
-    <header>
-        Swallow Falls City Hall Complaints and Meetings
-    </header>
+    <h1>
+        Swallow Falls City Hall
+    </h1>
+    <br>
 <nav>
     <button id = "meeting">Upcoming Meetings</button><button id = login>Login</button>
 </nav>
-<h1> 
+<br><br>
+<h2> 
     File a Complaint
-</h1>
+</h2>
+<br>
 
 <form>
 
     <fieldset>
 
-        <legend>File a Complaint</legend>
-
+        <br>
         <label for="first">First Name</label>
         <br>
         <input id="first" type="text" placeholder="John" autofocus></input>
@@ -43,8 +75,10 @@
         <label for="describe">Description</label>
         <br>
         <input id="describe" type="text" placeholder="Food Happened Unexpectedly" maxlength="250" size="100" required></input>
+        <br><br>
 
     </fieldset>
+    <br>
 
     <button id = "submit">Submit</button>
     
