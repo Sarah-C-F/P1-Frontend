@@ -22,17 +22,75 @@
     File a Complaint
 </h1>
 
-<input id = "first"></input>
-<input id = "last"></input>
-<input id = "describe"></input>
-<button id = "submit">Submit</button>
+<form>
+
+    <fieldset>
+
+        <legend>File a Complaint</legend>
+
+        <label for="first">First Name</label>
+        <br>
+        <input id="first" type="text" placeholder="John" autofocus></input>
+        <br>
+        <br>
+
+        <label for="last">Last Name</label>
+        <br>
+        <input id="last" type="text" placeholder="Doe"></input>
+        <br>
+        <br>
+        
+        <label for="describe">Description</label>
+        <br>
+        <input id="describe" type="text" placeholder="Food Happened Unexpectedly" maxlength="250" size="100" required></input>
+
+    </fieldset>
+
+    <button id = "submit">Submit</button>
+    
+</form>
+
+
 
 
 </body>
-<script>
+<script crossorigin="anonymous">
 // button meeting goes to meetings page
 // button login goes to login page
-// button submit saves string of first + last + describe and sends to App for database storage
+// button submit saves string of first + last + describe and sends to Api for database storage
+
+const first = document.getElementById("first");
+const last = document.getElementById("last");
+const describe =document.getElementById("describe");
+const submit = document.getElementById("submit");
+
+document.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const firstName = first.value;
+    const lastName = last.value;
+    const description = describe.value;
+
+    const complaint = {firstName, lastName, description};
+
+    const response = await fetch("http://localhost:8080/complaints",{
+        method:"POST",
+        body: JSON.stringify(complaint),
+        headers:{            
+            "Content-Type":"application/json"
+        }
+        
+    }) 
+    console.log(response.status);
+
+    if (response.status === 201){
+        alert("Complaint filed. Thank you for your concern.");
+    }else{
+        alert("There was a problem filing your complaint. Please try again later.");
+    }
+
+
+})
 
 
 
