@@ -13,6 +13,10 @@ h2 {
     text-align: center;
     font-size: 40px;
 }
+h3 {
+    margin: auto;
+    text-align: center;
+}
 nav {
     margin: auto;
 }
@@ -23,6 +27,24 @@ button{
 }
 body{
     background-image: url("https://farrensblob.z5.web.core.windows.net/C_CWACOM_0XXXX078_REC_MENA_VIDSCREENSHOT.jpg");
+}
+table{
+    background-color: rgb(172, 195, 238);
+    margin: auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+th {
+    font-size: 25px;
+    width: 150px;
+    border: dotted;
+    border-collapse: collapse;
+}
+td {
+    font-weight: bold;
+    font-size: 20;
+    border: dotted;
+    border-collapse: collapse;
 }
 </style>
 <head>
@@ -43,14 +65,61 @@ body{
 <h2> 
     Upcoming Meetings
 </h2>
-<ul>
+<br><br>
+<h3>
+    All meetings are held at 7:30 pm at the Swallow Falls City Hall in Conference Room A. Doors open at 7:00 pm.
+</h3>
+<br><br>
+<table>
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Day</th>
+            <th style= "width: 300px;">Topic</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>OCTOBER</td>
+            <td>31</td>
+            <td>Food from the sky</td>
+        </tr>
+    </tbody>
+    <tbody id="meetings">
 
-</ul>
+
+    </tbody>
+</table>
 <br>
 
 
 </body>
 <script crossorigin = "anonymous">
+    const meetings = document.getElementById("meetings");
+
+    async function getMeetings() {
+        const httpResponse = await fetch ("http://localhost:8080/meetings");
+        const meetings = await httpResponse.json();
+        return meetings;
+    }
+
+    async function renderMeetingsTable() {
+
+        const testMeestings = await getMeetings();
+
+        for(const meeting of testMeestings) {
+            const meetingRow = document.createElement("tr");
+
+            const meetMonth = document.createElement("td");
+            meetMonth.innerText = meeting.meeting_month;
+
+            const meetDay = document.createElement("td");
+            meetday.innerText = meeting.meeting_day;
+
+            const meetTopic = document.createElement("td");
+            meetTopic.innerText = meeting.topic;
+        }
+    }
 
 
 
