@@ -79,11 +79,7 @@ td {
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>OCTOBER</td>
-            <td>31</td>
-            <td>Food from the sky</td>
-        </tr>
+        
     </tbody>
     <tbody id="meetings">
 
@@ -105,21 +101,29 @@ td {
 
     async function renderMeetingsTable() {
 
-        const testMeestings = await getMeetings();
+        const testMeetings = await getMeetings();
 
-        for(const meeting of testMeestings) {
+        for(const meeting of testMeetings) {
             const meetingRow = document.createElement("tr");
 
-            const meetMonth = document.createElement("td");
-            meetMonth.innerText = meeting.meeting_month;
+            const month = document.createElement("td");
+            month.innerText = meeting.meetMonth;
 
-            const meetDay = document.createElement("td");
-            meetday.innerText = meeting.meeting_day;
+            const day = document.createElement("td");
+            day.innerText = meeting.meetDay;
 
             const meetTopic = document.createElement("td");
             meetTopic.innerText = meeting.topic;
+
+            meetingRow.appendChild(month);
+            meetingRow.appendChild(day);
+            meetingRow.appendChild(meetTopic);
+
+            meetings.appendChild(meetingRow);
         }
     }
+
+    renderMeetingsTable();
 
 
 
