@@ -36,7 +36,7 @@ table{
 }
 th {
     font-size: 25px;
-    width: 150px;
+    width: 200px;
     border: dotted;
     border-collapse: collapse;
 }
@@ -73,8 +73,7 @@ td {
 <table>
     <thead>
         <tr>
-            <th>Month</th>
-            <th>Day</th>
+            <th>Date</th>
             <th style= "width: 300px;">Topic</th>
         </tr>
     </thead>
@@ -104,19 +103,18 @@ td {
         const testMeetings = await getMeetings();
 
         for(const meeting of testMeetings) {
-            const meetingRow = document.createElement("tr");
-
-            const month = document.createElement("td");
-            month.innerText = meeting.meetMonth;
-
-            const day = document.createElement("td");
-            day.innerText = meeting.meetDay;
-
+            const meetingRow = document.createElement("tr");            
+            
+            const meetDate = document.createElement("td");
+            
+            const fullDate = new Date(meeting.meetingDate *1000);           
+            
+            meetDate.innerText = fullDate.toLocaleString();       
+           
             const meetTopic = document.createElement("td");
             meetTopic.innerText = meeting.topic;
 
-            meetingRow.appendChild(month);
-            meetingRow.appendChild(day);
+            meetingRow.appendChild(meetDate);
             meetingRow.appendChild(meetTopic);
 
             meetings.appendChild(meetingRow);
