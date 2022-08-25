@@ -102,8 +102,7 @@ td {
         if (httpResponse.status === 202){
             let person = await httpResponse.json();
             alert ("welcome Councilor");
-            console.log(person);
-
+        
             localStorage.setItem("firstName", person.firstName );
             localStorage.setItem("lastName", person.lastName);
 
@@ -113,6 +112,10 @@ td {
         } else if (httpResponse === 302) {
             const person = await httpResponse.json();
             alert= 'welcome constituent';
+
+            localStorage.setItem("firstName", person.firstName );
+            localStorage.setItem("lastName", person.lastName);
+            
             window.location = "https://farrensblob.z5.web.core.windows.net/FileComplaint.html"
 
         }else  if (httpResponse === 401){
