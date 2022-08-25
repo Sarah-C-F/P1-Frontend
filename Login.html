@@ -63,5 +63,62 @@ td {
 </nav>
 <br><br>
 <h2> 
-    Login
-</h2>
+    <form>
+        <fieldset>
+            <legend>Login</legend>
+
+            <label for="usernameInput">Username</label>
+            <input id="usernameInput" type="text" placeholder="jim99"/>
+
+            <label for="passwordInput">Password</label>
+            <input id="passwordInput" type="password"/>
+
+            <button>Login</button>
+
+        </fieldset>
+    </form>
+    
+</body>
+<script>
+
+    const usernameInput = document.getElementById("usernameInput");
+    const passwordInput = document.getElementById("passwordInput");
+
+    document.addEventListener("submit", async event =>{
+        event.preventDefault();
+
+        const login = usernameInput.value;
+        const logPass = passwordInput.value;
+        const credentials = {login,logPass};
+
+        const httpResponse = await fetch("http://localhost:8080/registry", {
+            method:"POST",
+            body:JSON.stringify(credentials),
+            headers:{
+                'Content-Type':"application/json"
+            }
+        })
+
+        if (httpResponse.status === 202){
+            let person = await httpResponse.json();
+            alert ("welcome Councilor");
+            console.log(person);
+
+            localStorage.setItem("firstName", person.firstName );
+            localStorage.setItem("lastName", person.lastName);
+
+            window.location = "https://farrensblob.z5.web.core.windows.net/FileComplaint.html";
+            
+
+        } else if (httpResponse === 302) {
+            const person = await httpResponse.json();
+            alert= 'welcome constituent';
+            window.location = "https://farrensblob.z5.web.core.windows.net/FileComplaint.html"
+
+        }else  if (httpResponse === 401){
+            alert = 'Unauthorized Access';
+        }
+
+
+    })
+</script>
