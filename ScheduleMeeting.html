@@ -47,6 +47,15 @@
             border: dotted;
             border-collapse: collapse;
         }
+        form {
+            margin:auto;
+            text-align: center;
+            font-weight: bold;
+        }
+        input {
+            text-align: center;
+            background-color: rgb(172, 195, 238);
+        }
     </style>
     <head>
         <title>
@@ -58,12 +67,15 @@
         <h1>
             Swallow Falls City Hall
         </h1>
-        <br>
+            <br>
         <nav>
             <button onclick="document.location='https://farrensblob.z5.web.core.windows.net/FileComplaint.html'">File a Complaint</button><button onclick="document.location='https://farrensblob.z5.web.core.windows.net/ViewMeetings.html'">Upcoming Meetings</button>
             <button onclick="">Review Complaints</button>
         </nav>
-        <br><br><br><br>
+            <br>
+            <br>
+            <br>
+            <br>
         <h2>Schedule Meetings</h2>
 
         <form>
@@ -71,30 +83,67 @@
             <fieldset>
         
                 <label for="date">Meeting Date</label>
-                <br>
+                    <br>
                 <input id="date" type="date"></input>
-                <br>
-                <br>
+                    <br>
+                    <br>
 
                 <label for="time">Time</label>
-                <br>
+                    <br>
                 <input id="time" type="time"></input>
-                <br><br>
+                    <br>
+                    <br>
                 
                 <label for="topic">Meeting Topic</label>
-                <br>
+                    <br>
                 <input id="topic" type="text" placeholder="Food Happened Unexpectedly" maxlength="250" size="100" required></input>
-                <br><br>
+                    <br>
+                    <br>
         
             </fieldset>
-            <br>
+                <br>
         
             <button id = "submit">Submit</button>
             
         </form>
 
-
-
-
     </body>
+    <script crossorigin="anonymous">
+
+        const inputDate = document.getElementById("date");
+        const inputTime = document.getElementById("time");
+        const inputTopic = document.getElementById("topic");
+
+        document.addEventListener("submit", async event =>{
+            event.preventDefault();
+
+            const date = inputDate.value;
+            const time = inputTime.value;
+            const meetingTopic = inputTopic.value;
+
+            const fullDate = new Date(date + " " + time);
+            const epochDate = fullDate.getTime()/1000.0;
+
+            const meeting = {meetingId:0, meetingDate: epochDate, topic: meetingTopic};
+
+            const response = await fetch("http://localhost:8080/meetings",{
+                method:"POST",
+                body: JSON.stringify(meeting),
+                headers:{            
+                    "Content-Type":"application/json"
+                }
+                
+            }) 
+            console.log(response.status);
+
+            if(response.status === 200) {
+                alert("Meeting Scheduled");
+            }else{
+                alert("There was a problem sheduling this meeting. Please try again later.");
+            }
+                    
+        })
+
+    </script>
+
 </html>

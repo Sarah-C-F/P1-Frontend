@@ -1,142 +1,125 @@
 <!DOCTYPE html>
 
 <html>
-<style>
-h1 {
-    border-style: dotted;
-    margin:auto;
-    text-align:center;
-    font-size: 55px;
-}
-h2 {
-    margin:auto;
-    text-align: center;
-    font-size: 40px;
-}
-form {
-    margin:auto;
-    text-align: center;
-    font-weight: bold;
-}
-input {
-    text-align: center;
-    background-color: rgb(172, 195, 238);
-}
-nav {
-    margin: auto;
-}
-button{
-    background-color: rgb(172, 195, 238);
-    font-size: 30px;
-    width: 50%;
-}
-body{
-    background-image: url("https://farrensblob.z5.web.core.windows.net/C_CWACOM_0XXXX078_REC_MENA_VIDSCREENSHOT.jpg");
-}
-
-</style>
-<head>
-<title>
-    Swallow Falls City Hall
-</title>
-
-</head>
-<body>
-    <h1>
-        Swallow Falls City Hall
-    </h1>
-    <br>
-<nav>
-    <button id = "meeting" onclick="document.location='https://farrensblob.z5.web.core.windows.net/ViewMeetings.html'">Upcoming Meetings</button><button id = login onclick="document.location='https://farrensblob.z5.web.core.windows.net/Login.html'">Login</button>
-</nav>
-<br><br>
-<h2> 
-    File a Complaint
-</h2>
-<br>
-
-<form>
-
-    <fieldset>
-
-        <br>
-        <label for="first">First Name</label>
-        <br>
-        <input id="first" type="text" placeholder="John" autofocus></input>
-        <br>
-        <br>
-
-        <label for="last">Last Name</label>
-        <br>
-        <input id="last" type="text" placeholder="Doe"></input>
-        <br>
-        <br>
-        
-        <label for="describe">Description</label>
-        <br>
-        <input id="describe" type="text" placeholder="Food Happened Unexpectedly" maxlength="250" size="100" required></input>
-        <br><br>
-
-    </fieldset>
-    <br>
-
-    <button id = "submit">Submit</button>
-    
-</form>
-
-
-
-
-</body>
-<script crossorigin="anonymous">
-// button meeting goes to meetings page
-// button login goes to login page
-// button submit saves string of first + last + describe and sends to Api for database storage
-
-const first = document.getElementById("first");
-const last = document.getElementById("last");
-const describe =document.getElementById("describe");
-const submit = document.getElementById("submit");
-
-document.addEventListener("submit", async event => {
-    event.preventDefault();
-
-    const firstName = first.value;
-    const lastName = last.value;
-    const description = describe.value;
-
-    const complaint = {firstName, lastName, description};
-
-    const response = await fetch("http://localhost:8080/complaints",{
-        method:"POST",
-        body: JSON.stringify(complaint),
-        headers:{            
-            "Content-Type":"application/json"
+    <style>
+        h1 {
+            border-style: dotted;
+            margin:auto;
+            text-align:center;
+            font-size: 55px;
         }
-        
-    }) 
-    console.log(response.status);
+        h2 {
+            margin:auto;
+            text-align: center;
+            font-size: 40px;
+        }
+        form {
+            margin:auto;
+            text-align: center;
+            font-weight: bold;
+        }
+        input {
+            text-align: center;
+            background-color: rgb(172, 195, 238);
+        }
+        nav {
+            margin: auto;
+        }
+        button{
+            background-color: rgb(172, 195, 238);
+            font-size: 30px;
+            width: 50%;
+        }
+        body{
+            background-image: url("https://farrensblob.z5.web.core.windows.net/C_CWACOM_0XXXX078_REC_MENA_VIDSCREENSHOT.jpg");
+        }
 
-    if (response.status === 201){
-        alert("Complaint filed. Thank you for your concern.");
-    }else{
-        alert("There was a problem filing your complaint. Please try again later.");
-    }
+    </style>
+    <head>
+        <title>
+            Swallow Falls City Hall
+        </title>
+    </head>
+    <body>
+        <h1>
+            Swallow Falls City Hall
+        </h1>
+            <br>
+        <nav>
+            <button id = "meeting" onclick="document.location='https://farrensblob.z5.web.core.windows.net/ViewMeetings.html'">Upcoming Meetings</button><button id = login onclick="document.location='https://farrensblob.z5.web.core.windows.net/Login.html'">Login</button>
+        </nav>
+            <br>
+            <br>
+        <h2> 
+            File a Complaint
+        </h2>
+            <br>
 
+        <form>
 
-})
+            <fieldset>
 
+                    <br>
+                <label for="first">First Name</label>
+                    <br>
+                <input id="first" type="text" placeholder="John" autofocus></input>
+                    <br>
+                    <br>
 
+                <label for="last">Last Name</label>
+                    <br>
+                <input id="last" type="text" placeholder="Doe"></input>
+                    <br>
+                    <br>
+                
+                <label for="describe">Description</label>
+                    <br>
+                <input id="describe" type="text" placeholder="Food Happened Unexpectedly" maxlength="250" size="100" required></input>
+                    <br>
+                    <br>
 
+            </fieldset>
+                <br>
 
-</script>
+            <button id = "submit">Submit</button>
+            
+        </form>
 
+    </body>
+    <script crossorigin="anonymous">
 
+        const first = document.getElementById("first");
+        const last = document.getElementById("last");
+        const describe =document.getElementById("describe");
+        const submit = document.getElementById("submit");
 
+        document.addEventListener("submit", async event => {
+            event.preventDefault();
 
+            const firstName = first.value;
+            const lastName = last.value;
+            const description = describe.value;
 
+            const complaint = {firstName, lastName, description};
 
+            const response = await fetch("http://localhost:8080/complaints",{
+                method:"POST",
+                body: JSON.stringify(complaint),
+                headers:{            
+                    "Content-Type":"application/json"
+                }
+                
+            }) 
+            console.log(response.status);
 
+            if (response.status === 201){
+                alert("Complaint filed. Thank you for your concern.");
+            }else{
+                alert("There was a problem filing your complaint. Please try again later.");
+            }
 
+        })
+
+    </script>
 
 </html>
