@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+    <style>
+        h1 {
+            border-style: dotted;
+            margin:auto;
+            text-align:center;
+            font-size: 55px;
+        }
+        h2 {
+            margin:auto;
+            text-align: center;
+            font-size: 40px;
+        }
+        h3 {
+            margin: auto;
+            text-align: center;
+        }
+        nav {
+            margin: auto;
+        }
+        button{
+            float: left;
+            background-color: rgb(172, 195, 238);
+            font-size: 30px;
+            width: 33.33%;
+        }
+        body{
+            background-image: url("https://farrensblob.z5.web.core.windows.net/C_CWACOM_0XXXX078_REC_MENA_VIDSCREENSHOT.jpg");
+        }
+        table{
+            background-color: rgb(172, 195, 238);
+            margin: auto;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        th {
+            font-size: 25px;
+            width: 200px;
+            border: dotted;
+            border-collapse: collapse;
+        }
+        td {
+            font-weight: bold;
+            font-size: 20;
+            border: dotted;
+            border-collapse: collapse;
+        }
+    </style>
+    <head>
+        <title>
+            Swallow Falls City Hall
+        </title>
+
+    </head>
+    <body>
+        <h1>
+            Swallow Falls City Hall
+        </h1>
+        <br>
+        <nav>
+            <button onclick="document.location='https://farrensblob.z5.web.core.windows.net/FileComplaint.html'">File a Complaint</button><button onclick="document.location='https://farrensblob.z5.web.core.windows.net/ViewMeetings.html'">Upcoming Meetings</button>
+            <button onclick="">Review Complaints</button>
+        </nav>
+        <br><br><br><br>
+        <h2>Schedule Meetings</h2>
+
+        <form>
+
+            <fieldset>
+        
+                <label for="date">Meeting Date</label>
+                <br>
+                <input id="date" type="date"></input>
+                <br>
+                <br>
+
+                <label for="time">Time</label>
+                <br>
+                <input id="time" type="time"></input>
+                <br><br>
+                
+                <label for="topic">Meeting Topic</label>
+                <br>
+                <input id="topic" type="text" placeholder="Food Happened Unexpectedly" maxlength="250" size="100" required></input>
+                <br><br>
+        
+            </fieldset>
+            <br>
+        
+            <button id = "submit">Submit</button>
+            
+        </form>
+
+
+
+
+    </body>
+</html>
