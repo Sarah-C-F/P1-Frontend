@@ -23,7 +23,7 @@
         button{
             background-color: rgb(172, 195, 238);
             font-size: 20px;
-            width: 50%;
+            width: 100%;
         }
         body{
             background-image: url("https://farrensblob.z5.web.core.windows.net/C_CWACOM_0XXXX078_REC_MENA_VIDSCREENSHOT.jpg");
@@ -80,8 +80,7 @@
         </h1>
             <br>
         <nav>
-            <button id = "meeting" onclick="document.location='https://farrensblob.z5.web.core.windows.net/FileComplaint.html'">File a Complaint</button><button id = login onclick="document.location='https://farrensblob.z5.web.core.windows.net/Login.html'">Login</button>
-        </nav>
+            <button id = "meeting" onclick="localStorage.clear, document.location='https://farrensblob.z5.web.core.windows.net/FileComplaint.html'">Logout</button>        </nav>
             <br>
             <br>
         <h2>Review and Update Complaints</h2>
@@ -147,83 +146,116 @@
     </body>
     <script crossorigin="anonymous">
 
-const meetings = document.getElementById("meetings");
-const complaint = document.getElementById("complaints");
+        const meetingsBody = document.getElementById("meetings");
+        const complaintBody = document.getElementById("complaints");
 
-async function getMeetings() {
-    const httpResponse = await fetch ("http://localhost:8080/meetings");
-    const meetings = await httpResponse.json();
-    return meetings;
-}
+        const complaintIdInput = document.getElementById("complaintIdInput");
+        const priorityInput = document.getElementById("priorityInput");
+        const meetingIdInput = document.getElementById("meetingIdInput");
 
-async function getComplaints(){
-    const httpResponse = await fetch ("http://localhost:8080/complaints");
-    const complaints = await httpResponse.json();
-    return complaints;
-}
+        document.addEventListener("submit", async event =>{
+            event.preventDefault();
 
-async function renderMeetingsTable() {
+            const complaintId = complaintIdInput.value;
+            const setpriority = priorityInput.value;
+            const setmeetingId = meetingIdInput.value;
 
-    const testMeetings = await getMeetings();
+            const complaint = {priority:setpriority, meetingId:setmeetingId};
+           
+            const response = await fetch(`http://localhost:8080/complaints/${complaintId}`,{
+                method:"PATCH",
+                body: JSON.stringify(complaint),
+                headers:{
+                    "Content-Type":"application/json"
+                }
+                
+            }) 
 
-    for(const meeting of testMeetings) {
-        const meetingRow = document.createElement("tr"); 
+            if(response.status === 200) {                
+                renderComplaintsTable();
+                alert("Complaint Updated");
+            }else{
+                alert("There was a problem updating this complaint. Please try again later");
+            }
+
+        })
+
+        async function getMeetings() {
+            const httpResponse = await fetch ("http://localhost:8080/meetings");
+            const meetings = await httpResponse.json();
+            return meetings;
+        }
+
+        async function getComplaints(){
+            const httpResponse = await fetch ("http://localhost:8080/complaints");
+            const complaints = await httpResponse.json();
+            return complaints;
+        }
+
+        async function renderMeetingsTable() {
+
+            const testMeetings = await getMeetings();
+
+            for(const meeting of testMeetings) {
+                const meetingRow = document.createElement("tr"); 
+                
+                const meetID = document.createElement("td");
+                meetID.innerText = meeting.meetingId;
+                
+                const meetDate = document.createElement("td");
+                
+                const fullDate = new Date(meeting.meetingDate *1000);           
+                
+                meetDate.innerText = fullDate.toLocaleString();       
+            
+                const meetTopic = document.createElement("td");
+                meetTopic.innerText = meeting.topic;
+
+                meetingRow.appendChild(meetID);
+                meetingRow.appendChild(meetDate);
+                meetingRow.appendChild(meetTopic);
+
+                meetingsBody.appendChild(meetingRow);
+            }
+        }
+
+        async function renderComplaintsTable() {
+            const testComplaints = await getComplaints();
+            
+            complaintBody.innerText = "";            
+
+            for(const complaint of testComplaints) {
+                const complaintRow = document.createElement("tr");
+
+                const ID = document.createElement("td");
+                ID.innerText = complaint.complaintId;
+
+                const Constituent = document.createElement("td");
+                const name = complaint.firstName + " " + complaint.lastName;
+                Constituent.innerText = name;
+
+                const Topic =document.createElement("td");
+                Topic.innerText = complaint.description;
+
+                const Priority = document.createElement("td");
+                Priority.innerText = complaint.priority;
+
+                const Meeting = document.createElement("td");
+                Meeting.innerText = complaint.meeting;
+
+                complaintRow.appendChild(ID);
+                complaintRow.appendChild(Constituent);
+                complaintRow.appendChild(Topic);
+                complaintRow.appendChild(Priority);
+                complaintRow.appendChild(Meeting);
+
+                complaintBody.appendChild(complaintRow);
+            }
+        }
         
-        const meetID = document.createElement("td");
-        meetID.innerText = meeting.meetingId;
-        
-        const meetDate = document.createElement("td");
-        
-        const fullDate = new Date(meeting.meetingDate *1000);           
-        
-        meetDate.innerText = fullDate.toLocaleString();       
-    
-        const meetTopic = document.createElement("td");
-        meetTopic.innerText = meeting.topic;
+        renderMeetingsTable();
 
-        meetingRow.appendChild(meetID);
-        meetingRow.appendChild(meetDate);
-        meetingRow.appendChild(meetTopic);
-
-        meetings.appendChild(meetingRow);
-    }
-}
-
-async function renderComplaintsTable() {
-    const testComplaints = await getComplaints();
-
-    for(const complaint of testComplaints) {
-        const complaintRow = document.createElement("tr");
-
-        const ID = document.createElement("td");
-        ID.innerText = complaint.complaintId;
-
-        const Constituent = document.createElement("td");
-        const name = complaint.firstName + " " + complaint.lastName;
-        Constituent.innerText = name;
-
-        const Topic =document.createElement("td");
-        Topic.innerText = complaint.description;
-
-        const Priority = document.createElement("td");
-        Priority.innerText = complaint.priority;
-
-        const Meeting = document.createElement("td");
-        Meeting.innerText = complaint.meeting;
-
-        complaintRow.appendChild(ID);
-        complaintRow.appendChild(Constituent);
-        complaintRow.appendChild(Topic);
-        complaintRow.appendChild(Priority);
-        complaintRow.appendChild(Meeting);
-
-        complaints.appendChild(complaintRow);
-    }
-}
-
-renderMeetingsTable();
-
-renderComplaintsTable();
+        renderComplaintsTable();
 
     </script>
 </html>
