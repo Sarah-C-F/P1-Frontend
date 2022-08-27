@@ -161,7 +161,10 @@
             const setpriority = priorityInput.value;
             const setmeetingId = meetingIdInput.value;
 
-            const complaint = {priority:setpriority, meetingId:setmeetingId};
+            console.log(setmeetingId);
+
+            const complaint = {priority:setpriority, meeting:setmeetingId};
+            console.log(complaint.meeting)
            
             const response = await fetch(`http://localhost:8080/complaints/${complaintId}`,{
                 method:"PATCH",
