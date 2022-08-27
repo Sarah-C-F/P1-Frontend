@@ -14,8 +14,8 @@
             font-size: 40px;
         }
         h3 {
-            /* margin: auto; */
-            /* text-align: center; */
+            text-align: center; 
+            font-size: 30px;
         }
         nav {
             margin: auto;
@@ -35,14 +35,14 @@
             border-collapse: collapse;
         }
         th {
-            font-size: 25px;
+            font-size: 20px;
             width: 200px;
             border: dotted;
             border-collapse: collapse;
         }
         td {
             font-weight: bold;
-            font-size: 20;
+            font-size: 25;
             border: dotted;
             border-collapse: collapse;
         }
@@ -57,6 +57,16 @@
         input {
             text-align: center;
             background-color: rgb(172, 195, 238);
+        }
+        div.A{
+            float: left;
+            width: 60%;
+            text-align: center;
+        }
+        div.B{
+            float: right;
+            width: 35%;
+            text-align: center;
         }
     </style>
     <head>
@@ -81,7 +91,7 @@
         
                 <label style ="width: 30%;" for="complaintIdInput">Complaint ID</label><label style ="width: 30%;" for="priorityInput">Priority</label><label style ="width: 30%;" for="meetingIdInput">Meeting Attachment ID</label>
                     <br>
-                <input id="complaintIdInput" style ="width: 30%;" type="number" required></input><input id="priorityInput" style ="width: 30%;" type=""></input><input id="meetingIdInput" style ="width: 30%;" type="number"></input>
+                <input id="complaintIdInput" style ="width: 30%;" type="number" required></input><input id="priorityInput" style ="width: 30%;" list="level" name="level"></input><input id="meetingIdInput" style ="width: 30%;" type="number"></input>
                     <br>
                     <br>
                 <button id = "submit">Submit</button>
@@ -89,8 +99,131 @@
                          
         </form>
 
+        <datalist id="level">
+            <option value="HIGH"></option>
+            <option value="LOW"></option>
+            <option value="IGNORE"></option>
+            <option value="UNASSIGNED"></option>
+        </datalist>
+
+        <div class="A">
+            <h3>Filed Complaints</h3>
+               
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 55px;">ID</th>
+                        <th>Constituent</th>
+                        <th style= "width: 300px;">Topic</th>
+                        <th style="width: 100px;">Priority</th>
+                        <th style="width: 100px;">Meeting</th>
+                    </tr>
+                </thead>
+            <tbody id="complaints">
+
+            </tbody>
+        </table>
+
+        </div>
+        <div class="B">
+             
+            <h3>Scheduled Meetings</h3>
+               
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 55px;">ID</th>
+                        <th style="width: 100px;">Date</th>
+                        <th style= "width: 300px;">Topic</th>
+                    </tr>
+                </thead>
+            <tbody id="meetings">
+
+            </tbody>
+        </table>
+
+        </div>
+
     </body>
     <script crossorigin="anonymous">
+
+const meetings = document.getElementById("meetings");
+const complaint = document.getElementById("complaints");
+
+async function getMeetings() {
+    const httpResponse = await fetch ("http://localhost:8080/meetings");
+    const meetings = await httpResponse.json();
+    return meetings;
+}
+
+async function getComplaints(){
+    const httpResponse = await fetch ("http://localhost:8080/complaints");
+    const complaints = await httpResponse.json();
+    return complaints;
+}
+
+async function renderMeetingsTable() {
+
+    const testMeetings = await getMeetings();
+
+    for(const meeting of testMeetings) {
+        const meetingRow = document.createElement("tr"); 
+        
+        const meetID = document.createElement("td");
+        meetID.innerText = meeting.meetingId;
+        
+        const meetDate = document.createElement("td");
+        
+        const fullDate = new Date(meeting.meetingDate *1000);           
+        
+        meetDate.innerText = fullDate.toLocaleString();       
+    
+        const meetTopic = document.createElement("td");
+        meetTopic.innerText = meeting.topic;
+
+        meetingRow.appendChild(meetID);
+        meetingRow.appendChild(meetDate);
+        meetingRow.appendChild(meetTopic);
+
+        meetings.appendChild(meetingRow);
+    }
+}
+
+async function renderComplaintsTable() {
+    const testComplaints = await getComplaints();
+
+    for(const complaint of testComplaints) {
+        const complaintRow = document.createElement("tr");
+
+        const ID = document.createElement("td");
+        ID.innerText = complaint.complaintId;
+
+        const Constituent = document.createElement("td");
+        const name = complaint.firstName + " " + complaint.lastName;
+        Constituent.innerText = name;
+
+        const Topic =document.createElement("td");
+        Topic.innerText = complaint.description;
+
+        const Priority = document.createElement("td");
+        Priority.innerText = complaint.priority;
+
+        const Meeting = document.createElement("td");
+        Meeting.innerText = complaint.meeting;
+
+        complaintRow.appendChild(ID);
+        complaintRow.appendChild(Constituent);
+        complaintRow.appendChild(Topic);
+        complaintRow.appendChild(Priority);
+        complaintRow.appendChild(Meeting);
+
+        complaints.appendChild(complaintRow);
+    }
+}
+
+renderMeetingsTable();
+
+renderComplaintsTable();
 
     </script>
 </html>
