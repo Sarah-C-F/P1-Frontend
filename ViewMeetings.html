@@ -98,7 +98,7 @@
         const meetings = document.getElementById("meetings");
 
         async function getMeetings() {
-            const httpResponse = await fetch ("http://localhost:8080/meetings");
+            const httpResponse = await fetch ("https://p1-container.icyflower-b4d66cd7.westus.azurecontainerapps.io/meetings");
             const meetings = await httpResponse.json();
             return meetings;
         }

@@ -125,7 +125,7 @@
 
             const meeting = {meetingId:0, meetingDate: epochDate, topic: meetingTopic};
 
-            const response = await fetch("http://localhost:8080/meetings",{
+            const response = await fetch("https://p1-container.icyflower-b4d66cd7.westus.azurecontainerapps.io/meetings",{
                 method:"POST",
                 body: JSON.stringify(meeting),
                 headers:{            
