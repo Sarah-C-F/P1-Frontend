@@ -27,7 +27,7 @@
             width: 50%;
         }
         body{
-            background-image: url("https://farrensblob.z5.web.core.windows.net/C_CWACOM_0XXXX078_REC_MENA_VIDSCREENSHOT.jpg");
+            background-image: url("https://p1frontend.z5.web.core.windows.net/C_CWACOM_0XXXX078_REC_MENA_VIDSCREENSHOT.jpg");
         }
         table{
             background-color: rgb(172, 195, 238);
@@ -69,7 +69,7 @@
         </h1>
             <br>
         <nav>
-            <button onclick="localStorage.clear, document.location='https://farrensblob.z5.web.core.windows.net/FileComplaint.html'">Logout</button><button onclick="document.location='https://farrensblob.z5.web.core.windows.net/ReviewComplaints.html'">Review Complaints</button>
+            <button onclick="localStorage.clear, document.location='https://p1frontend.z5.web.core.windows.net/FileComplaint.html'">Logout</button><button onclick="document.location='https://p1frontend.z5.web.core.windows.net/ReviewComplaints.html'">Review Complaints</button>
         </nav>
             <br>
             <br>
@@ -125,7 +125,7 @@
 
             const meeting = {meetingId:0, meetingDate: epochDate, topic: meetingTopic};
 
-            const response = await fetch("https://p1-container.icyflower-b4d66cd7.westus.azurecontainerapps.io/meetings",{
+            const response = await fetch("https://p1-sf.azurewebsites.net/meetings",{
                 method:"POST",
                 body: JSON.stringify(meeting),
                 headers:{            

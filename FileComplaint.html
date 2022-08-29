@@ -31,7 +31,7 @@
             width: 50%;
         }
         body{
-            background-image: url("https://farrensblob.z5.web.core.windows.net/C_CWACOM_0XXXX078_REC_MENA_VIDSCREENSHOT.jpg");
+            background-image: url("https://p1frontend.z5.web.core.windows.net/C_CWACOM_0XXXX078_REC_MENA_VIDSCREENSHOT.jpg");
         }
 
     </style>
@@ -46,7 +46,7 @@
         </h1>
             <br>
         <nav>
-            <button id = "meeting" onclick="document.location='https://farrensblob.z5.web.core.windows.net/ViewMeetings.html'">Upcoming Meetings</button><button id = login onclick="document.location='https://farrensblob.z5.web.core.windows.net/Login.html'">Login</button>
+            <button id = "meeting" onclick="document.location='https://p1frontend.z5.web.core.windows.net/ViewMeetings.html'">Upcoming Meetings</button><button id = login onclick="document.location='https://p1frontend.z5.web.core.windows.net/Login.html'">Login</button>
         </nav>
             <br>
             <br>
@@ -102,7 +102,7 @@
 
             const complaint = {firstName, lastName, description};
 
-            const response = await fetch("https://p1-container.icyflower-b4d66cd7.westus.azurecontainerapps.io/complaints",{
+            const response = await fetch("https://p1-sf.azurewebsites.net/complaints",{
                 method:"POST",
                 body: JSON.stringify(complaint),
                 headers:{            
